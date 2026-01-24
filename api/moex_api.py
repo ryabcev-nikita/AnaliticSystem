@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 class MoexResourceAnalyzer:
     """Данные с Московской биржи"""
     

@@ -1,3 +1,4 @@
+import os
 import time
 import requests
 from bs4 import BeautifulSoup
@@ -34,6 +35,14 @@ def get_fundamental_shares():
     df = pd.DataFrame(data, columns=headers)
 
     # Сохранение в Excel
-    df.to_excel(f'companies_data.xlsx', index=False)
+    # Ваш исходный вариант, но с добавлением папки data
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    file_path = os.path.join(parent_dir, 'data', 'companies_data.xlsx')
 
-    print("Данные успешно сохранены в файл 'companies_data.xlsx'")
+    # Убедимся, что папка существует
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+    df.to_excel(file_path, index=False)
+
+if __name__ == "__main__":
+    get_fundamental_shares()    

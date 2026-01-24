@@ -680,7 +680,7 @@ def create_model_tree_solver():
         print("Не удалось сформировать рекомендации")
 
     # Функция для сохранения в Excel с форматированием
-    def save_to_excel(full_df, recommendations_df, filename='акции_рекомендации.xlsx'):
+    def save_to_excel(full_df, recommendations_df, filename='../../data/акции_рекомендации.xlsx'):
         """Сохранить результаты анализа в Excel файл"""
         
         try:
@@ -891,3 +891,7 @@ def create_model_tree_solver():
     print(f"Всего проанализировано {len(df)} компаний")
     print(f"Сформировано {len(recommendations)} рекомендаций")
     print(f"Результаты сохранены в Excel файл")
+
+
+if __name__ == "__main__":
+    create_model_tree_solver()
