@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 from sklearn.tree import DecisionTreeClassifier, export_text
@@ -80,7 +81,9 @@ def clean_ticker(value):
     
     return ticker
 
-def load_company_data_from_excel(file_path='companies_data.xlsx'):
+def load_company_data_from_excel():
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    file_path=f'{parent_dir}/../data/companies_data.xlsx'
     """Загрузка данных о компаниях из Excel файла"""
     try:
         # Загружаем данные из Excel

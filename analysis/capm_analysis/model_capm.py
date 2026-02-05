@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
-import utils
+from shared.utils import calculate_log_return, calculate_return, remove_outliers_zscore
 
 def create_model_capm(free_rate, file_asset, file_market):
     matplotlib.use('tkagg')
@@ -18,10 +18,10 @@ def create_model_capm(free_rate, file_asset, file_market):
     returns_asset = []
     returns_market = []
     for i in range(len(data_asset['<CLOSE>']) - 1):
-        returns_asset.append(utils.calculate_return(data_asset['<CLOSE>'][i], data_asset['<CLOSE>'][i+1]))
+        returns_asset.append(calculate_return(data_asset['<CLOSE>'][i], data_asset['<CLOSE>'][i+1]))
 
     for i in range(len(data_market['<CLOSE>']) - 1):
-        returns_market .append(utils.calculate_return(data_market['<CLOSE>'][i], data_market['<CLOSE>'][i+1]))
+        returns_market .append(calculate_return(data_market['<CLOSE>'][i], data_market['<CLOSE>'][i+1]))
 
     returns_asset = pd.DataFrame(returns_asset)
     returns_market = pd.DataFrame(returns_market)

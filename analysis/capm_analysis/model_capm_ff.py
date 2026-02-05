@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 import matplotlib.pyplot as plt
-import shared.utils
+from shared.utils import calculate_log_return, calculate_return, remove_outliers_zscore
 
 def create_model_capm_ff(free_rate, file_asset, file_market, file_big_cap, file_small_cap, file_stock_value, file_stock_growth):
     matplotlib.use('tkagg')
@@ -19,10 +19,10 @@ def create_model_capm_ff(free_rate, file_asset, file_market, file_big_cap, file_
     returns_asset = []
     returns_market = []
     for i in range(len(data_asset['<CLOSE>']) - 1):
-        returns_asset.append(utils.calculate_log_return(data_asset['<CLOSE>'][i], data_asset['<CLOSE>'][i+1]))
+        returns_asset.append(calculate_log_return(data_asset['<CLOSE>'][i], data_asset['<CLOSE>'][i+1]))
 
     for i in range(len(data_market['<CLOSE>']) - 1):
-        returns_market.append(utils.calculate_log_return(data_market['<CLOSE>'][i], data_market['<CLOSE>'][i+1]))
+        returns_market.append(calculate_log_return(data_market['<CLOSE>'][i], data_market['<CLOSE>'][i+1]))
 
     returns_asset = pd.DataFrame(returns_asset)
     returns_market = pd.DataFrame(returns_market)
@@ -43,10 +43,10 @@ def create_model_capm_ff(free_rate, file_asset, file_market, file_big_cap, file_
     returns_stock_growth = []
     returns_stock_value = []
     for i in range(len(data_stock_growth['<CLOSE>']) - 1):
-        returns_stock_growth.append(utils.calculate_return(data_stock_growth['<CLOSE>'][i], data_stock_growth['<CLOSE>'][i+1]))
+        returns_stock_growth.append(calculate_return(data_stock_growth['<CLOSE>'][i], data_stock_growth['<CLOSE>'][i+1]))
 
     for i in range(len(data_stock_value['<CLOSE>']) - 1):
-        returns_stock_value.append(utils.calculate_return(data_stock_value['<CLOSE>'][i], data_stock_value['<CLOSE>'][i+1]))
+        returns_stock_value.append(calculate_return(data_stock_value['<CLOSE>'][i], data_stock_value['<CLOSE>'][i+1]))
 
     returns_hml = []
     for i in range(len(returns_stock_growth)):
@@ -57,10 +57,10 @@ def create_model_capm_ff(free_rate, file_asset, file_market, file_big_cap, file_
     returns_stock_small = []
     returns_stock_big = []
     for i in range(len(data_big_cap['<CLOSE>']) - 1):
-        returns_stock_big.append(utils.calculate_return(data_big_cap['<CLOSE>'][i], data_big_cap['<CLOSE>'][i+1]))
+        returns_stock_big.append(calculate_return(data_big_cap['<CLOSE>'][i], data_big_cap['<CLOSE>'][i+1]))
 
     for i in range(len(data_small_cap['<CLOSE>']) - 1):
-        returns_stock_small.append(utils.calculate_return(data_small_cap['<CLOSE>'][i], data_small_cap['<CLOSE>'][i+1]))
+        returns_stock_small.append(calculate_return(data_small_cap['<CLOSE>'][i], data_small_cap['<CLOSE>'][i+1]))
 
     returns_smb = []
     for i in range(len(returns_stock_big)):
@@ -75,7 +75,7 @@ def create_model_capm_ff(free_rate, file_asset, file_market, file_big_cap, file_
     print(data_begin)
 
     # Удаление выбросов с использованием Z-оценки
-    data_no_outliers = utils.remove_outliers_zscore(data_begin.copy())
+    data_no_outliers = remove_outliers_zscore(data_begin.copy())
     #data = data_no_outliers.copy()
     data = data_begin
 

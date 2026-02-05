@@ -14,7 +14,7 @@ def get_fundamental_shares():
     soup = BeautifulSoup(response.content, 'html.parser')
 
     # Поиск таблицы
-    table = soup.find('table', class_='simple-little-table little trades-table')
+    table = soup.find_all('table', class_='simple-little-table little trades-table')
 
     print(table)
     # Инициализация списков для хранения данных
@@ -43,6 +43,8 @@ def get_fundamental_shares():
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
     df.to_excel(file_path, index=False)
+
+
 
 if __name__ == "__main__":
     get_fundamental_shares()    
