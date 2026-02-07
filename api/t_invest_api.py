@@ -20,6 +20,10 @@ os.makedirs(os.path.dirname(file_path), exist_ok=True)
 file_path_json = os.path.join(parent_dir, "data", "shares.json")
 
 
+def get_bonds(token):
+    pass
+
+
 def get_shares(token):
     """Получает список акций через API Т-Банка"""
     try:
