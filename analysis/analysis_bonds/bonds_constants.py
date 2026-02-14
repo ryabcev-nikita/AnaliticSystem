@@ -9,18 +9,16 @@ RESULTS_DIR = os.path.join(DATA_DIR, "bonds_analysis")
 
 # ============= Дата анализа =============
 ANALYSIS_DATE = datetime.now().strftime("%Y-%m-%d")
-START_DATE = "2025-02-13"
-END_DATE = "2026-02-13"
 
 # ============= Параметры оптимизации =============
-RISK_FREE_RATE = 0.16  # 16% - ключевая ставка ЦБ РФ
-INFLATION_RATE = 0.075  # 7.5% - прогноз инфляции
+RISK_FREE_RATE = 0.155  # 16% - ключевая ставка ЦБ РФ
+INFLATION_RATE = 0.055  # 7.5% - прогноз инфляции
 TAX_RATE = 0.13  # 13% - НДФЛ на купоны
 
 # Параметры для разных валют
 CURRENCY_PARAMS = {
     "rub": {
-        "risk_free_rate": 0.16,
+        "risk_free_rate": 0.155,
         "min_yield": 0.12,
         "max_yield": 0.35,
         "min_duration": 0.1,
@@ -117,7 +115,7 @@ SECTORS = {
 # ============= Параметры оптимизации портфеля =============
 OPTIMIZATION_PARAMS = {
     "min_bonds": 15,  # Минимальное количество облигаций
-    "max_bonds": 30,  # Максимальное количество облигаций
+    "max_bonds": 50,  # Максимальное количество облигаций
     "min_weight_per_bond": 0.01,  # 1% - минимальный вес
     "max_weight_per_bond": 0.15,  # 15% - максимальный вес
     "max_weight_single_issuer": 0.20,  # 20% - на одного эмитента
