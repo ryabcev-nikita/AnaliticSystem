@@ -510,6 +510,17 @@ def format_excel_file(filename, df):
         print(f"   ⚠️ Ошибка форматирования: {e}")
 
 
+def get_full_data_t_api():
+    print("🚀 Запуск скрипта для работы с API Т-Банк Инвестиции")
+    print("=" * 50)
+
+    # get_bonds(TOKEN, True, bonds_path)
+    # get_bonds_data()
+    success = get_shares(TOKEN)
+    if success:
+        get_fundamentals_assets_to_excel(TOKEN)
+
+
 # Основной запуск
 if __name__ == "__main__":
     print("🚀 Запуск скрипта для работы с API Т-Банк Инвестиции")
@@ -517,6 +528,6 @@ if __name__ == "__main__":
 
     # get_bonds(TOKEN, True, bonds_path)
     get_bonds_data()
-    """success = get_shares(TOKEN)
+    success = get_shares(TOKEN)
     if success:
-        get_fundamentals_assets_to_excel(TOKEN)"""
+        get_fundamentals_assets_to_excel(TOKEN)

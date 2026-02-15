@@ -311,7 +311,7 @@ def save_portfolio_results(df, portfolios, candidates, output_path):
     print(f"✅ Результаты сохранены в {output_path}")
 
 
-def main():
+def create_model_ai_anomaly_detector_ae():
     """Основная функция"""
 
     print(AE_FORMAT.SEPARATOR)
@@ -415,4 +415,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    create_model_ai_anomaly_detector_ae()

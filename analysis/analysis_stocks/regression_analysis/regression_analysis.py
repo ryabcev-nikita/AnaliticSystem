@@ -4,16 +4,16 @@
 
 import pandas as pd
 from regression_models.regression_constants.multiplicator_constants import PATHS
-from analysis.analysis_stocks.regression_analysis.regression_models.regression_loader.data_processor import (
+from regression_models.regression_loader.data_processor import (
     StockDataProcessor,
 )
-from analysis.analysis_stocks.regression_analysis.regression_models.regression_analyzer.regression_analyzer import (
+from regression_models.regression_analyzer.regression_analyzer import (
     RegressionAnalyzer,
 )
-from analysis.analysis_stocks.regression_analysis.regression_models.regression_portfolio.portfolio_optimizer import (
+from regression_models.regression_portfolio.portfolio_optimizer import (
     PortfolioOptimizerForRegression,
 )
-from analysis.analysis_stocks.regression_analysis.regression_models.regression_report.report_generator import (
+from regression_models.regression_report.report_generator import (
     ReportGenerator,
 )
 import warnings
@@ -23,7 +23,7 @@ import sys
 warnings.filterwarnings("ignore")
 
 
-def main():
+def create_model_regression_analysis():
     """Основная функция для запуска анализа"""
 
     try:
@@ -118,4 +118,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    create_model_regression_analysis()

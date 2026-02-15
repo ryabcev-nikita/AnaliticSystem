@@ -11,6 +11,7 @@ from tree_solver_models.tree_solver_analyzer.multiplier_analyzer import (
     MultiplierAnalyzer,
 )
 from tree_solver_models.tree_solver_constants.tree_solver_constants import (
+    CONVERSION,
     FORMATTING,
     PORTFOLIO_CONSTANTS,
     TARGET_MAPPING,
@@ -224,6 +225,38 @@ def create_model_tree_solver():
     except Exception as e:
         print(f"❌ Ошибка при оптимизации портфеля: {e}")
         return None
+
+
+def create_full_model_tree_solver():
+    portfolio = create_model_tree_solver()
+
+    if portfolio is not None:
+        print(FORMATTING.SEPARATOR)
+        print("📊 ДОПОЛНИТЕЛЬНЫЙ АНАЛИЗ МУЛЬТИПЛИКАТОРОВ")
+        print(FORMATTING.SEPARATOR)
+
+        loader = DataLoader()
+        df_full = loader.load_and_clean_data(PATHS["file_path"])
+        df_full["Сектор"] = df_full["Название"].apply(MarketAnalyzer.assign_sector)
+
+        multiplier_analyzer = MultiplierAnalyzer()
+        sector_multipliers = multiplier_analyzer.analyze_sector_multipliers(df_full)
+
+        print("\n📈 МУЛЬТИПЛИКАТОРЫ ПО СЕКТОРАМ:")
+        print(sector_multipliers.round(2).to_string(index=False))
+
+        best_values = multiplier_analyzer.find_best_values(df_full)
+        print("\n🏆 ЛУЧШИЕ ЗНАЧЕНИЯ НА РЫНКЕ:")
+        for key, value in best_values.items():
+            if pd.notna(value):
+                if "доходность" in key.lower():
+                    print(f"   {key}: {FORMATTING.PERCENT_FORMAT.format(value / 100)}")
+                elif "капитализация" in key.lower():
+                    print(
+                        f"   {key}: {FORMATTING.BILLIONS_FORMAT.format(value / CONVERSION.BILLION)}"
+                    )
+                else:
+                    print(f"   {key}: {FORMATTING.FLOAT_FORMAT_2D.format(value)}")
 
 
 # ==================== ЗАПУСК С ДОПОЛНИТЕЛЬНЫМ АНАЛИЗОМ ====================

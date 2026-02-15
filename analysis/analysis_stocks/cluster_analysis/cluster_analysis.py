@@ -24,7 +24,7 @@ warnings.filterwarnings("ignore")
 # ==================== ОСНОВНОЙ ПАЙПЛАЙН ====================
 
 
-def create_model_cluster_analysis_with_portfolio():
+def create_model_cluster_analysis():
     """Полный анализ с кластеризацией и оптимизацией портфелей"""
 
     print(CLUSTER_FORMAT.SEPARATOR)
@@ -231,10 +231,8 @@ def create_model_cluster_analysis_with_portfolio():
     print(f"   • {CLUSTER_FILES.PORTFOLIO_COMPARISON_FILE} - сравнение портфелей")
     print(CLUSTER_FORMAT.SEPARATOR)
 
-    return portfolio_managers, cluster_profiles
-
 
 # ==================== ЗАПУСК ====================
 
 if __name__ == "__main__":
-    portfolios, clusters = create_model_cluster_analysis_with_portfolio()
+    create_model_cluster_analysis()

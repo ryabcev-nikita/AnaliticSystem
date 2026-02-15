@@ -27,7 +27,7 @@ from ai_risk_models.ai_risk_visualizer.ai_risk_visualizer import (
 )
 
 
-def train_and_optimize_portfolio():
+def create_model_ai_risk_analysis():
     """Полный пайплайн: обучение нейросети + оптимизация портфеля"""
 
     print(NN_FORMAT.SEPARATOR)
@@ -193,14 +193,12 @@ def train_and_optimize_portfolio():
     print("✅ Анализ завершен!")
     print(NN_FORMAT.SEPARATOR)
 
-    return df_with_risk, portfolios
-
 
 # ==================== ЗАПУСК ====================
 
 if __name__ == "__main__":
     try:
-        df_results, portfolios = train_and_optimize_portfolio()
+        create_model_ai_risk_analysis()
     except Exception as e:
         print(f"\n❌ Ошибка при выполнении анализа: {str(e)}")
         import traceback
