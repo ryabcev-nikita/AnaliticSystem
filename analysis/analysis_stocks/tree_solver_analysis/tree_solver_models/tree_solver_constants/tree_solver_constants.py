@@ -96,7 +96,7 @@ class RiskPremiums:
 
     OVERVALUED_PENALTY: float = 0.05  # +5% за переоцененность
 
-    MIN_RISK: float = 0.155  # 8% - минимальный риск
+    MIN_RISK: float = 0.10  # 8% - минимальный риск
     MAX_RISK: float = 0.45  # 45% - максимальный риск
 
 
@@ -179,7 +179,7 @@ class PortfolioConstants:
     MAX_RISK: float = 0.40  # 40%
 
     # Максимальное количество кандидатов
-    MAX_CANDIDATES: int = 15
+    MAX_CANDIDATES: int = 30
 
     # Топ позиций для отображения
     TOP_POSITIONS_N: int = 10
