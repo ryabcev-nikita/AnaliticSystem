@@ -2,7 +2,7 @@
 import re
 import numpy as np
 import pandas as pd
-from tree_solver_models.tree_solver_constants.tree_solver_constants import CONVERSION
+from ...tree_solver_models.tree_solver_constants.tree_solver_constants import CONVERSION
 
 
 class DataLoader:

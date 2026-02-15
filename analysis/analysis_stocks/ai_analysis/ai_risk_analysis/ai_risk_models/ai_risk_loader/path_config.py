@@ -2,7 +2,7 @@
 
 
 import os
-from ai_risk_models.ai_risk_constants.ai_risk_constants import NN_FILES
+from ...ai_risk_models.ai_risk_constants.ai_risk_constants import NN_FILES
 
 
 class NNRiskPathConfig:

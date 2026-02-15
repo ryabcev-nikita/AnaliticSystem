@@ -1,14 +1,14 @@
 # ==================== КЛАСС АНАЛИЗАТОРА РЫНКА ===================
 from typing import Dict
 import pandas as pd
-from tree_solver_models.tree_solver_constants.tree_solver_constants import (
+from ...tree_solver_models.tree_solver_constants.tree_solver_constants import (
     FINANCIAL,
     SECTOR_KEYWORDS,
     SECTOR_NAMES,
     TARGET_MAPPING,
     VALUATION_SCORES,
 )
-from tree_solver_models.tree_solver_market.market_benchmarks import MarketBenchmarks
+from ...tree_solver_models.tree_solver_market.market_benchmarks import MarketBenchmarks
 
 
 class MarketAnalyzer:

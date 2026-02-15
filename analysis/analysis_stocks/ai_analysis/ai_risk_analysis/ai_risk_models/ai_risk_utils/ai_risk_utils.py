@@ -1,5 +1,5 @@
 from typing import Dict
-from ai_risk_models.ai_risk_constants.ai_risk_constants import (
+from ...ai_risk_models.ai_risk_constants.ai_risk_constants import (
     NN_FEATURE,
     NN_THRESHOLD,
     RISK_SCORE,

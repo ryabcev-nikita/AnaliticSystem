@@ -1,12 +1,12 @@
 # ==================== КЛАСС ФУНДАМЕНТАЛЬНОГО АНАЛИЗА ====================
 import pandas as pd
-from tree_solver_models.tree_solver_constants.tree_solver_constants import (
+from ...tree_solver_models.tree_solver_constants.tree_solver_constants import (
     FINANCIAL,
     RETURN_PREMIUMS,
     RISK_PREMIUMS,
     TARGET_MAPPING,
 )
-from tree_solver_models.tree_solver_market.market_benchmarks import MarketBenchmarks
+from ...tree_solver_models.tree_solver_market.market_benchmarks import MarketBenchmarks
 
 
 class FundamentalAnalyzer:

@@ -10,8 +10,8 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 from sklearn.discriminant_analysis import StandardScaler
 from sklearn.metrics import silhouette_score
-from cluster_models.cluster_loader.path_config import CLUSTER_PATHS
-from cluster_models.cluster_constants.cluster_constants import (
+from ...cluster_models.cluster_loader.path_config import CLUSTER_PATHS
+from ...cluster_models.cluster_constants.cluster_constants import (
     CLUSTER,
     CLUSTER_FILES,
     CLUSTER_FORMAT,

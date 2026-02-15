@@ -6,7 +6,7 @@ from typing import Dict, List
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
-from cluster_models.cluster_constants.cluster_constants import (
+from ...cluster_models.cluster_constants.cluster_constants import (
     CLUSTER,
     CLUSTER_FILES,
     CLUSTER_FORMAT,

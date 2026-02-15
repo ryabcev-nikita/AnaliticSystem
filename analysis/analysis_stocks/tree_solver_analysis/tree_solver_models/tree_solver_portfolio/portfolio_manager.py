@@ -2,10 +2,10 @@
 from dataclasses import dataclass
 import numpy as np
 import pandas as pd
-from tree_solver_models.tree_solver_portfolio.portfolio_optimizer_tree import (
+from ...tree_solver_models.tree_solver_portfolio.portfolio_optimizer_tree import (
     PortfolioOptimizerTree,
 )
-from tree_solver_models.tree_solver_constants.tree_solver_constants import (
+from ...tree_solver_models.tree_solver_constants.tree_solver_constants import (
     PORTFOLIO_CONSTANTS,
 )
 

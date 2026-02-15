@@ -7,7 +7,7 @@ import torch.nn as nn
 from scipy.optimize import minimize
 from typing import Dict
 
-from ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import (
+from ...ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import (
     AE_ARCH,
     AE_PORTFOLIO,
     AE_THRESHOLD,
@@ -102,6 +102,12 @@ class AEPortfolioOptimizer:
                 base_return += AE_PORTFOLIO.PB_STRONG_PREMIUM
             elif row["P_B"] < AE_THRESHOLD.PB_UNDERVALUED:
                 base_return += AE_PORTFOLIO.PB_MEDIUM_PREMIUM
+
+        if pd.notna(row.get("P_S")) and row["P_S"] > 0:
+            if row["P_S"] < AE_THRESHOLD.PS_STRONG_UNDERVALUED:
+                base_return += AE_PORTFOLIO.PS_STRONG_PREMIUM
+            elif row["P_S"] < AE_THRESHOLD.PS_UNDERVALUED:
+                base_return += AE_PORTFOLIO.PS_MEDIUM_PREMIUM
 
         if pd.notna(row.get("ROE")):
             if row["ROE"] > AE_THRESHOLD.ROE_HIGH:

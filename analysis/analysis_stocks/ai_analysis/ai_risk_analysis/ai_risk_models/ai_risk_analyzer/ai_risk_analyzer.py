@@ -11,7 +11,7 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 from sklearn.metrics import classification_report
-from ai_risk_models.ai_risk_constants.ai_risk_constants import (
+from ...ai_risk_models.ai_risk_constants.ai_risk_constants import (
     NN_ARCH,
     NN_FEATURE,
     NN_FEATURE_ALIASES,
@@ -21,7 +21,6 @@ from ai_risk_models.ai_risk_constants.ai_risk_constants import (
     RISK_CAT,
     RISK_SCORE,
 )
-from ai_risk_models.ai_risk_utils.ai_risk_utils import NNRiskUtils
 
 
 @dataclass

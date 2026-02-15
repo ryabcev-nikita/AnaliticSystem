@@ -5,17 +5,17 @@ from typing import Dict
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
-from ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import (
+from ...ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import (
     AE_FILES,
     AE_FORMAT,
     AE_REC,
     AE_THRESHOLD,
 )
-from ai_anomaly_detector_models.ai_anomaly_portfolio.ai_anomaly_portfolio_manager import (
+from ...ai_anomaly_detector_models.ai_anomaly_portfolio.ai_anomaly_portfolio_manager import (
     AEPortfolioManager,
 )
 
-from ai_anomaly_detector_models.ai_anomaly_loader.path_config import (
+from ...ai_anomaly_detector_models.ai_anomaly_loader.path_config import (
     AE_PATHS,
 )
 

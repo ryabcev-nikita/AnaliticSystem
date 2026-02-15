@@ -4,7 +4,7 @@
 import re
 import numpy as np
 import pandas as pd
-from cluster_models.cluster_constants.cluster_constants import (
+from ...cluster_models.cluster_constants.cluster_constants import (
     SECTOR_KEYWORDS_CLUSTER,
     SECTOR_NAMES_CLUSTER,
 )

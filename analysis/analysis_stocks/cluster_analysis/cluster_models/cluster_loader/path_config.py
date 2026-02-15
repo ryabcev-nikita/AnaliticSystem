@@ -3,7 +3,7 @@
 
 import os
 
-from cluster_models.cluster_constants.cluster_constants import CLUSTER_FILES
+from ...cluster_models.cluster_constants.cluster_constants import CLUSTER_FILES
 
 
 class ClusterPathConfig:

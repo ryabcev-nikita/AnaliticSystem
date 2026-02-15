@@ -3,14 +3,16 @@
 
 from typing import List
 import pandas as pd
-from tree_solver_models.tree_solver_portfolio.portfolio_manager import PortfolioManager
-from tree_solver_models.tree_solver_constants.tree_solver_constants import (
+from ...tree_solver_models.tree_solver_portfolio.portfolio_manager import (
+    PortfolioManager,
+)
+from ...tree_solver_models.tree_solver_constants.tree_solver_constants import (
     FILE_CONSTANTS,
     FORMATTING,
     PORTFOLIO_CONSTANTS,
     REPORT,
 )
-from tree_solver_models.tree_solver_market.market_benchmarks import MarketBenchmarks
+from ...tree_solver_models.tree_solver_market.market_benchmarks import MarketBenchmarks
 
 
 class ReportGenerator:

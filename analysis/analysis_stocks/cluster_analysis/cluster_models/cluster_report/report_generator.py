@@ -2,12 +2,12 @@
 from typing import Dict, List
 import pandas as pd
 
-from cluster_models.cluster_analyzer.cluster_analyzer import ClusterCharacteristics
-from cluster_models.cluster_constants.cluster_constants import (
+from ...cluster_models.cluster_analyzer.cluster_analyzer import ClusterCharacteristics
+from ...cluster_models.cluster_constants.cluster_constants import (
     CLUSTER_FILES,
     CLUSTER_REPORT,
 )
-from cluster_models.cluster_portfolio.portfolio_optimizer import (
+from ...cluster_models.cluster_portfolio.portfolio_optimizer import (
     PortfolioManager,
 )
 

@@ -3,7 +3,7 @@ from typing import Dict
 import pandas as pd
 from scipy.optimize import minimize
 import numpy as np
-from tree_solver_models.tree_solver_constants.tree_solver_constants import (
+from ...tree_solver_models.tree_solver_constants.tree_solver_constants import (
     PORTFOLIO_CONSTANTS,
 )
 

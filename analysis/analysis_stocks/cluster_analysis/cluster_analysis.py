@@ -1,18 +1,17 @@
 import os
 import warnings
 
-# Импорт констант
-from cluster_models.cluster_analyzer.cluster_analyzer import ClusterAnalyzer
-from cluster_models.cluster_analyzer.fundamental_analyzer import FundamentalAnalyzer
-from cluster_models.cluster_loader.data_loader import DataLoader
-from cluster_models.cluster_loader.path_config import CLUSTER_PATHS
-from cluster_models.cluster_portfolio.portfolio_optimizer import (
+from .cluster_models.cluster_analyzer.cluster_analyzer import ClusterAnalyzer
+from .cluster_models.cluster_analyzer.fundamental_analyzer import FundamentalAnalyzer
+from .cluster_models.cluster_loader.data_loader import DataLoader
+from .cluster_models.cluster_loader.path_config import CLUSTER_PATHS
+from .cluster_models.cluster_portfolio.portfolio_optimizer import (
     PortfolioManager,
     PortfolioOptimizer,
     PortfolioVisualizer,
 )
-from cluster_models.cluster_report.report_generator import ReportGenerator
-from cluster_models.cluster_constants.cluster_constants import (
+from .cluster_models.cluster_report.report_generator import ReportGenerator
+from .cluster_models.cluster_constants.cluster_constants import (
     CLUSTER,
     PORTFOLIO_CLUSTER,
     CLUSTER_FILES,

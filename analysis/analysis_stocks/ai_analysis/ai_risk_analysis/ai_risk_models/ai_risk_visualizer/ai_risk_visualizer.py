@@ -6,18 +6,18 @@ from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
 
-from ai_risk_models.ai_risk_constants.ai_risk_constants import (
+from ...ai_risk_models.ai_risk_constants.ai_risk_constants import (
     NN_FEATURE,
     NN_FILES,
     NN_FORMAT,
     RISK_CAT,
 )
-from ai_risk_models.ai_risk_loader.path_config import NN_RISK_PATHS
+from ...ai_risk_models.ai_risk_loader.path_config import NN_RISK_PATHS
 
-from ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_optimizer import (
+from ...ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_optimizer import (
     NNRiskPortfolioOptimizer,
 )
-from ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_manager import (
+from ...ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_manager import (
     NNRiskPortfolioManager,
 )
 

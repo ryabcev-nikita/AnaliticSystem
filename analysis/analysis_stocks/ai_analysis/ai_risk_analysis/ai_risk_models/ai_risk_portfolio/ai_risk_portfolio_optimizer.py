@@ -5,7 +5,7 @@ import pandas as pd
 from scipy.optimize import minimize
 import numpy as np
 
-from ai_risk_models.ai_risk_constants.ai_risk_constants import (
+from ...ai_risk_models.ai_risk_constants.ai_risk_constants import (
     NN_PORTFOLIO,
     RISK_CAT,
 )

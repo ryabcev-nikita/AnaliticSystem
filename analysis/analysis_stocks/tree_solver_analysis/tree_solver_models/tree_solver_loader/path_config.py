@@ -1,6 +1,6 @@
 # ==================== КОНФИГУРАЦИЯ ПУТЕЙ ====================
 import os
-from tree_solver_models.tree_solver_constants.tree_solver_constants import (
+from ...tree_solver_models.tree_solver_constants.tree_solver_constants import (
     FILE_CONSTANTS,
 )
 

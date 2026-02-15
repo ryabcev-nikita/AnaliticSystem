@@ -115,13 +115,13 @@ class ModelConstants:
     RANDOM_STATE: int = 42
 
     # Пороги для целевой переменной
-    PE_STRONG_BUY_THRESHOLD: float = 5.0
-    PE_BUY_THRESHOLD: float = 10.0
-    PE_SELL_THRESHOLD: float = 20.0
+    PE_STRONG_BUY_THRESHOLD: float = 10.0
+    PE_BUY_THRESHOLD: float = 20.0
+    PE_SELL_THRESHOLD: float = 50.0
 
-    PB_STRONG_BUY_THRESHOLD: float = 1.0
-    PB_BUY_THRESHOLD: float = 1.5
-    PB_SELL_THRESHOLD: float = 3.0
+    PB_STRONG_BUY_THRESHOLD: float = 2.0
+    PB_BUY_THRESHOLD: float = 3.0
+    PB_SELL_THRESHOLD: float = 6.0
 
 
 @dataclass(frozen=True)

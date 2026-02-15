@@ -5,10 +5,10 @@ from typing import Dict
 
 import numpy as np
 import pandas as pd
-from ai_anomaly_detector_models.ai_anomaly_analyzer.ai_anomaly_analyzer import (
+from ...ai_anomaly_detector_models.ai_anomaly_analyzer.ai_anomaly_analyzer import (
     AEPortfolioOptimizer,
 )
-from ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import (
+from ...ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import (
     AE_FORMAT,
     AE_REC,
 )

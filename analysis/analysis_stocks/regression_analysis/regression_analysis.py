@@ -3,17 +3,17 @@
 """
 
 import pandas as pd
-from regression_models.regression_constants.multiplicator_constants import PATHS
-from regression_models.regression_loader.data_processor import (
+from .regression_models.regression_constants.multiplicator_constants import PATHS
+from .regression_models.regression_loader.data_processor import (
     StockDataProcessor,
 )
-from regression_models.regression_analyzer.regression_analyzer import (
+from .regression_models.regression_analyzer.regression_analyzer import (
     RegressionAnalyzer,
 )
-from regression_models.regression_portfolio.portfolio_optimizer import (
+from .regression_models.regression_portfolio.portfolio_optimizer import (
     PortfolioOptimizerForRegression,
 )
-from regression_models.regression_report.report_generator import (
+from .regression_models.regression_report.report_generator import (
     ReportGenerator,
 )
 import warnings

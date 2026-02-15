@@ -4,7 +4,7 @@
 from typing import Dict
 import pandas as pd
 
-from tree_solver_models.tree_solver_constants.tree_solver_constants import CONVERSION
+from ...tree_solver_models.tree_solver_constants.tree_solver_constants import CONVERSION
 
 
 class MultiplierAnalyzer:

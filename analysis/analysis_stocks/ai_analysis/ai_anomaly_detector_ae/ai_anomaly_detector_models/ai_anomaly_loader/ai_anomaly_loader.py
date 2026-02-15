@@ -3,7 +3,7 @@
 
 import pandas as pd
 
-from ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import (
+from ...ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import (
     AE_COLUMN,
 )
 

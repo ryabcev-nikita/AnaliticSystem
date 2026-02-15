@@ -48,6 +48,10 @@ class AEThresholdConstants:
     PE_UNDERVALUED: float = 10.0
     PE_OVERVALUED: float = 25.0
 
+    PS_STRONG_UNDERVALUED: float = 5.0
+    PS_UNDERVALUED: float = 10.0
+    PS_OVERVALUED: float = 25.0
+
     PB_STRONG_UNDERVALUED: float = 0.8
     PB_UNDERVALUED: float = 1.2
 
@@ -100,6 +104,10 @@ class AEPortfolioConstants:
     PE_STRONG_PREMIUM: float = 0.05
     PE_MEDIUM_PREMIUM: float = 0.03
     PE_OVER_PENALTY: float = -0.03
+
+    PS_STRONG_PREMIUM: float = 0.05
+    PS_MEDIUM_PREMIUM: float = 0.03
+    PS_OVER_PENALTY: float = -0.03
 
     # Премии за P/B
     PB_STRONG_PREMIUM: float = 0.04

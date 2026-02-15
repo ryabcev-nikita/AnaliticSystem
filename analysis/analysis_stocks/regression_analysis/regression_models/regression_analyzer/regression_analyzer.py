@@ -11,7 +11,7 @@ import statsmodels.api as sm
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.robust.robust_linear_model import RLM
 from statsmodels.robust.norms import HuberT
-from regression_constants.multiplicator_constants import (
+from ..regression_constants.multiplicator_constants import (
     ANALYSIS_COLUMNS,
     PLOT_CONFIG,
     OUTPUT_FILES,

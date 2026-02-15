@@ -6,21 +6,21 @@ import warnings
 from sklearn.preprocessing import RobustScaler
 import torch
 
-from ai_anomaly_detector_models.ai_anomaly_analyzer.ai_anomaly_analyzer import (
+from .ai_anomaly_detector_models.ai_anomaly_analyzer.ai_anomaly_analyzer import (
     AEPortfolioOptimizer,
     AnomalyDetectorAE,
 )
-from ai_anomaly_detector_models.ai_anomaly_loader.ai_anomaly_loader import (
+from .ai_anomaly_detector_models.ai_anomaly_loader.ai_anomaly_loader import (
     AEDataLoader,
 )
-from ai_anomaly_detector_models.ai_anomaly_loader.path_config import AE_PATHS
-from ai_anomaly_detector_models.ai_anomaly_portfolio.ai_anomaly_portfolio_manager import (
+from .ai_anomaly_detector_models.ai_anomaly_loader.path_config import AE_PATHS
+from .ai_anomaly_detector_models.ai_anomaly_portfolio.ai_anomaly_portfolio_manager import (
     AEPortfolioManager,
 )
-from ai_anomaly_detector_models.ai_anomaly_visualizer.ai_anomaly_visualizer import (
+from .ai_anomaly_detector_models.ai_anomaly_visualizer.ai_anomaly_visualizer import (
     AEPortfolioVisualizer,
 )
-from ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import (
+from .ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import (
     AE_ARCH,
     AE_FEATURE,
     AE_FILES,
@@ -29,7 +29,7 @@ from ai_anomaly_detector_models.ai_anomaly_constants.ai_anomaly_constants import
     AE_SCORING,
     AE_THRESHOLD,
 )
-from ai_anomaly_detector_models.ai_anomaly_utils.ai_anomaly_utils import AEDataUtils
+from .ai_anomaly_detector_models.ai_anomaly_utils.ai_anomaly_utils import AEDataUtils
 import torch
 import torch.nn as nn
 import torch.optim as optim

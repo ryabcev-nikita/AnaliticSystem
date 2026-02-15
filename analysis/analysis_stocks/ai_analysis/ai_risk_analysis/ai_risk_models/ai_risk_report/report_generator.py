@@ -3,8 +3,8 @@
 
 from typing import Dict
 import pandas as pd
-from ai_risk_models.ai_risk_constants.ai_risk_constants import NN_FILES
-from ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_manager import (
+from ...ai_risk_models.ai_risk_constants.ai_risk_constants import NN_FILES
+from ...ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_manager import (
     NNRiskPortfolioManager,
 )
 

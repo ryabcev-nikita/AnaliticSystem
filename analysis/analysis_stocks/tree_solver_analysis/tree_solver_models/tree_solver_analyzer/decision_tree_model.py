@@ -7,13 +7,13 @@ from sklearn.discriminant_analysis import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 
-from tree_solver_models.tree_solver_constants.tree_solver_constants import (
+from ...tree_solver_models.tree_solver_constants.tree_solver_constants import (
     FILE_CONSTANTS,
     FORMATTING,
     MODEL_CONSTANTS,
     TARGET_MAPPING,
 )
-from tree_solver_models.tree_solver_market.market_analyzer import MarketAnalyzer
+from ...tree_solver_models.tree_solver_market.market_analyzer import MarketAnalyzer
 
 
 class DecisionTreeModel:

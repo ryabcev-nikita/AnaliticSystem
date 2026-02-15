@@ -4,7 +4,7 @@
 
 import pandas as pd
 import numpy as np
-from regression_constants.multiplicator_constants import (
+from ..regression_constants.multiplicator_constants import (
     OUTPUT_FILES,
 )
 import os

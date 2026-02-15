@@ -2,7 +2,7 @@
 
 
 import pandas as pd
-from cluster_models.cluster_constants.cluster_constants import (
+from ...cluster_models.cluster_constants.cluster_constants import (
     CLUSTER_THRESHOLDS,
     PORTFOLIO_CLUSTER,
     RETURN_PREMIUMS_CLUSTER,

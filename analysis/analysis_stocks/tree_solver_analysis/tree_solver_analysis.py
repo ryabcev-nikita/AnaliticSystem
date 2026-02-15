@@ -1,43 +1,44 @@
+import os
+import sys
 import warnings
 
 import pandas as pd
-from tree_solver_models.tree_solver_analyzer.decision_tree_model import (
+from .tree_solver_models.tree_solver_analyzer.decision_tree_model import (
     DecisionTreeModel,
 )
-from tree_solver_models.tree_solver_analyzer.fundamental_analyzer import (
+from .tree_solver_models.tree_solver_analyzer.fundamental_analyzer import (
     FundamentalAnalyzer,
 )
-from tree_solver_models.tree_solver_analyzer.multiplier_analyzer import (
+from .tree_solver_models.tree_solver_analyzer.multiplier_analyzer import (
     MultiplierAnalyzer,
 )
-from tree_solver_models.tree_solver_constants.tree_solver_constants import (
+from .tree_solver_models.tree_solver_constants.tree_solver_constants import (
     CONVERSION,
     FORMATTING,
     PORTFOLIO_CONSTANTS,
     TARGET_MAPPING,
 )
-from tree_solver_models.tree_solver_loader.data_loader import (
+from .tree_solver_models.tree_solver_loader.data_loader import (
     DataLoader,
 )
-from tree_solver_models.tree_solver_loader.path_config import (
+from .tree_solver_models.tree_solver_loader.path_config import (
     PATHS,
 )
-from tree_solver_models.tree_solver_market.market_analyzer import (
+from .tree_solver_models.tree_solver_market.market_analyzer import (
     MarketAnalyzer,
 )
-from tree_solver_models.tree_solver_portfolio.portfolio_manager import (
+from .tree_solver_models.tree_solver_portfolio.portfolio_manager import (
     PortfolioManager,
 )
-from tree_solver_models.tree_solver_portfolio.portfolio_optimizer_tree import (
+from .tree_solver_models.tree_solver_portfolio.portfolio_optimizer_tree import (
     PortfolioOptimizerTree,
 )
-from tree_solver_models.tree_solver_report.report_generator import (
+from .tree_solver_models.tree_solver_report.report_generator import (
     ReportGenerator,
 )
-from tree_solver_models.tree_solver_vizualizer.portfolio_visualizer import (
+from .tree_solver_models.tree_solver_vizualizer.portfolio_visualizer import (
     PortfolioVisualizer,
 )
-
 
 warnings.filterwarnings("ignore")
 

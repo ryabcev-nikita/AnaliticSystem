@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
-from regression_constants.multiplicator_constants import (
+from ..regression_constants.multiplicator_constants import (
     COMPOSITE_SCORE_WEIGHTS,
     PORTFOLIO_CONFIG,
     PLOT_CONFIG,

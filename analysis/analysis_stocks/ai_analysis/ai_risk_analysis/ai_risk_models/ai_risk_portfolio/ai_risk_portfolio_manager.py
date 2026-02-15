@@ -4,8 +4,8 @@
 import numpy as np
 import pandas as pd
 
-from ai_risk_models.ai_risk_constants.ai_risk_constants import NN_FORMAT
-from ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_optimizer import (
+from ...ai_risk_models.ai_risk_constants.ai_risk_constants import NN_FORMAT
+from ...ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_optimizer import (
     NNRiskPortfolioOptimizer,
 )
 

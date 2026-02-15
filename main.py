@@ -1,3 +1,6 @@
+from analysis.analysis_stocks.tree_solver_analysis.tree_solver_analysis import (
+    create_full_model_tree_solver,
+)
 from analysis.analysis_stocks.ai_analysis.ai_anomaly_detector_ae.ai_anomaly_detector_ae import (
     create_model_ai_anomaly_detector_ae,
 )
@@ -9,9 +12,6 @@ from analysis.analysis_stocks.cluster_analysis.cluster_analysis import (
 )
 from analysis.analysis_stocks.regression_analysis.regression_analysis import (
     create_model_regression_analysis,
-)
-from analysis.analysis_stocks.tree_solver_analysis.tree_solver_analysis import (
-    create_full_model_tree_solver,
 )
 from api.t_invest_api import get_full_data_t_api
 from shared.config import ACTIONS_MAIN

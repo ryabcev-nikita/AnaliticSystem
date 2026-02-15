@@ -2,27 +2,27 @@
 import os
 
 import pandas as pd
-from ai_risk_models.ai_risk_analyzer.ai_risk_analyzer import (
+from .ai_risk_models.ai_risk_analyzer.ai_risk_analyzer import (
     NeuralRiskAssessor,
 )
-from ai_risk_models.ai_risk_constants.ai_risk_constants import (
+from .ai_risk_models.ai_risk_constants.ai_risk_constants import (
     NN_ARCH,
     NN_FORMAT,
     NN_PORTFOLIO,
 )
-from ai_risk_models.ai_risk_loader.path_config import (
+from .ai_risk_models.ai_risk_loader.path_config import (
     NN_RISK_PATHS,
 )
-from ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_manager import (
+from .ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_manager import (
     NNRiskPortfolioManager,
 )
-from ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_optimizer import (
+from .ai_risk_models.ai_risk_portfolio.ai_risk_portfolio_optimizer import (
     NNRiskPortfolioOptimizer,
 )
-from ai_risk_models.ai_risk_report.report_generator import (
+from .ai_risk_models.ai_risk_report.report_generator import (
     NNRiskReportGenerator,
 )
-from ai_risk_models.ai_risk_visualizer.ai_risk_visualizer import (
+from .ai_risk_models.ai_risk_visualizer.ai_risk_visualizer import (
     NNRiskPortfolioVisualizer,
 )
 
