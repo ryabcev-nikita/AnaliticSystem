@@ -1,6 +1,5 @@
 from analysis import (
     create_full_model_tree_solver,
-    create_model_ai_anomaly_detector_ae,
     create_model_ai_risk_analysis,
     create_model_cluster_analysis,
     create_model_regression_analysis,
@@ -15,8 +14,7 @@ def do_full_analysis():
     # create_model_regression_analysis()
     # create_full_model_tree_solver()
     # create_model_cluster_analysis()
-    # create_model_ai_risk_analysis()
-    create_model_ai_anomaly_detector_ae()
+    create_model_ai_risk_analysis()
     print("-------------------------------------------------------")
 
 

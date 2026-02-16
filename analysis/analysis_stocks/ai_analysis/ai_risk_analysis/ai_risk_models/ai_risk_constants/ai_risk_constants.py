@@ -298,41 +298,41 @@ class NNFeatureAliases:
     PE_ALIASES: Tuple[str, ...] = ("P/E", "P_E", "PE", "Price/Earnings")
     PB_ALIASES: Tuple[str, ...] = ("P/B", "P_B", "PB", "Price/Book")
     PS_ALIASES: Tuple[str, ...] = ("P/S", "P_S", "PS", "Price/Sales")
-    PFCF_ALIASES: Tuple[str, ...] = ("P/FCF", "P_FCF", "PFCF", "Price/FCF")
+    # PFCF_ALIASES: Tuple[str, ...] = ("P/FCF", "P_FCF", "PFCF", "Price/FCF")
     EV_EBITDA_ALIASES: Tuple[str, ...] = (
         "EV/EBITDA",
         "EV_EBITDA",
         "EV/EBIT",
         "EV_EBIT",
     )
-    EV_S_ALIASES: Tuple[str, ...] = ("EV/S", "EV_S", "EV/Sales", "EV_Sales")
+    # EV_S_ALIASES: Tuple[str, ...] = ("EV/S", "EV_S", "EV/Sales", "EV_Sales")
     ROE_ALIASES: Tuple[str, ...] = ("ROE", "Рентабельность капитала")
     ROA_ALIASES: Tuple[str, ...] = ("ROA", "Рентабельность активов")
-    ROIC_ALIASES: Tuple[str, ...] = ("ROIC", "Рентабельность инвестиций")
+    # ROIC_ALIASES: Tuple[str, ...] = ("ROIC", "Рентабельность инвестиций")
     NPM_ALIASES: Tuple[str, ...] = ("NPM", "Чистая маржа", "Net Profit Margin")
-    EBITDA_MARGIN_ALIASES: Tuple[str, ...] = (
-        "EBITDA margin",
-        "Рентабельность EBITDA",
-        "EBITDA_Margin",
-    )
+    # EBITDA_MARGIN_ALIASES: Tuple[str, ...] = (
+    # "EBITDA margin",
+    # "Рентабельность EBITDA",
+    # "EBITDA_Margin",
+    # )
     DEBT_CAPITAL_ALIASES: Tuple[str, ...] = (
         "Debt/Capital",
         "debt_capital",
         "Debt_to_Capital",
         "Долг/Капитал",
     )
-    DEBT_EBITDA_ALIASES: Tuple[str, ...] = ("Debt/EBITDA", "Debt_EBITDA", "Долг/EBITDA")
-    NET_DEBT_EBITDA_ALIASES: Tuple[str, ...] = (
-        "Net_Debt/EBITDA",
-        "Net_Debt_EBITDA",
-        "Чистый долг/EBITDA",
-    )
+    # DEBT_EBITDA_ALIASES: Tuple[str, ...] = ("Debt/EBITDA", "Debt_EBITDA", "Долг/EBITDA")
+    # NET_DEBT_EBITDA_ALIASES: Tuple[str, ...] = (
+    # "Net_Debt/EBITDA",
+    # "Net_Debt_EBITDA",
+    # "Чистый долг/EBITDA",
+    # )
     DIV_YIELD_ALIASES: Tuple[str, ...] = (
         "dividend_yield",
         "Averange_dividend_yield",
         "Дивидендная доходность",
     )
-    EPS_ALIASES: Tuple[str, ...] = ("EPS", "Прибыль на акцию")
+    # EPS_ALIASES: Tuple[str, ...] = ("EPS", "Прибыль на акцию")
     BETA_ALIASES: Tuple[str, ...] = ("Beta", "Бета", "beta", "БЕТА", "b")
 
     # Полный маппинг признаков
@@ -347,10 +347,10 @@ class NNFeatureAliases:
                 "P/B": self.PB_ALIASES,
                 "P/S": self.PS_ALIASES,
                 # "P/FCF": self.PFCF_ALIASES,
-                # "EV/EBITDA": self.EV_EBITDA_ALIASES,
+                "EV/EBITDA": self.EV_EBITDA_ALIASES,
                 # "EV/S": self.EV_S_ALIASES,
                 "ROE": self.ROE_ALIASES,
-                # "ROA": self.ROA_ALIASES,
+                "ROA": self.ROA_ALIASES,
                 # "ROIC": self.ROIC_ALIASES,
                 "NPM": self.NPM_ALIASES,
                 # "EBITDA margin": self.EBITDA_MARGIN_ALIASES,
