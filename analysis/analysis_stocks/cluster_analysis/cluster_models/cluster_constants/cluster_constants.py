@@ -24,7 +24,7 @@ class ClusterConstants:
     PCA_COMPONENTS: int = 2
 
     # Признаки по умолчанию
-    DEFAULT_CLUSTER_FEATURES: Tuple[str, ...] = ("PB", "ROE")
+    DEFAULT_CLUSTER_FEATURES: Tuple[str, ...] = ("PE", "g")
 
     # Минимальное количество данных для кластеризации
     MIN_DATA_FOR_CLUSTERING: int = 3
@@ -129,11 +129,11 @@ class PortfolioClusterConstants:
     MIN_WEIGHT: float = 0.01
     MAX_WEIGHT: float = 0.15
     MIN_WEIGHT_LOOSE: float = 0.02
-    MAX_WEIGHT_LOOSE: float = 0.20
+    MAX_WEIGHT_LOOSE: float = 0.15
 
     # Корреляции внутри и между кластерами
-    INTRA_CLUSTER_CORRELATION: float = 0.4
-    INTER_CLUSTER_CORRELATION: float = 0.15
+    INTRA_CLUSTER_CORRELATION: float = 0.5
+    INTER_CLUSTER_CORRELATION: float = 0.25
 
     # Базовые значения доходности и риска
     BASE_EXPECTED_RETURN: float = 0.155
@@ -148,7 +148,7 @@ class PortfolioClusterConstants:
     MAX_RISK_THRESHOLD: float = 0.40
 
     # Максимальное количество кандидатов
-    MAX_CANDIDATES: int = 20
+    MAX_CANDIDATES: int = 30
 
     # Веса для общего скора
     VALUE_SCORE_WEIGHT: float = 0.3

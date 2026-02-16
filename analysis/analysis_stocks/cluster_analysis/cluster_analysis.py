@@ -59,12 +59,10 @@ def create_model_cluster_analysis():
 
     cluster_analyzer = ClusterAnalyzer()
     optimal_k, _ = cluster_analyzer.find_optimal_clusters(
-        df_cluster, available_features, max_clusters=CLUSTER.MAX_CLUSTERS
+        df_cluster, max_clusters=CLUSTER.MAX_CLUSTERS
     )
 
-    df_clustered = cluster_analyzer.fit_predict(
-        df_cluster, available_features, n_clusters=optimal_k
-    )
+    df_clustered = cluster_analyzer.fit_predict(df_cluster, n_clusters=optimal_k)
 
     cluster_profiles = cluster_analyzer.analyze_clusters(df_clustered)
 

@@ -11,11 +11,11 @@ from shared.config import ACTIONS_MAIN
 
 def do_full_analysis():
     print("---------------------Анализ акций----------------------")
-    get_full_data_t_api()
-    create_model_regression_analysis()
-    create_full_model_tree_solver()
-    create_model_cluster_analysis()
-    create_model_ai_risk_analysis()
+    # get_full_data_t_api()
+    # create_model_regression_analysis()
+    # create_full_model_tree_solver()
+    # create_model_cluster_analysis()
+    # create_model_ai_risk_analysis()
     create_model_ai_anomaly_detector_ae()
     print("-------------------------------------------------------")
 

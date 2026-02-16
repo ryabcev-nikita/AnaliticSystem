@@ -157,8 +157,8 @@ class PortfolioConstants:
 
     # Ограничения на веса
     MIN_WEIGHT: float = 0.01  # 1% - минимальная доля
-    MAX_WEIGHT: float = 0.20  # 20% - максимальная доля
-    MAX_WEIGHT_LOOSE: float = 0.25  # 25% - расширенный лимит
+    MAX_WEIGHT: float = 0.15  # 20% - максимальная доля
+    MAX_WEIGHT_LOOSE: float = 0.15  # 25% - расширенный лимит
 
     # Корреляции
     INTRASECTOR_CORRELATION: float = 0.5  # Корреляция внутри сектора

@@ -92,7 +92,6 @@ class ReportGenerator:
                         CLUSTER_REPORT.COL_CLUSTER: profile.cluster_id,
                         CLUSTER_REPORT.COL_CLUSTER_SIZE: profile.size,
                         CLUSTER_REPORT.COL_AVG_PE: f"{profile.avg_pe:.1f}",
-                        CLUSTER_REPORT.COL_AVG_PB: f"{profile.avg_pb:.2f}",
                         CLUSTER_REPORT.COL_AVG_ROE: f"{profile.avg_roe:.1f}%",
                         CLUSTER_REPORT.COL_AVG_DIV: f"{profile.avg_div_yield:.1f}%",
                         CLUSTER_REPORT.COL_RISK_CLUSTER: f"{profile.avg_risk:.1%}",

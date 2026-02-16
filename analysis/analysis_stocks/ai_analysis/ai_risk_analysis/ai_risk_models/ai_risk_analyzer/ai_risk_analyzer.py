@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List, Tuple, Optional
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import RobustScaler
 import tensorflow as tf
@@ -34,10 +34,11 @@ class RiskProfile:
     expected_return: float
     volatility: float
     sharpe_candidate: float
+    growth_rate: float  # Добавлен темп роста
 
 
 class NeuralRiskAssessor:
-    """Класс для нейросетевой оценки рисков акций"""
+    """Класс для нейросетевой оценки рисков акций с учетом темпа роста g"""
 
     def __init__(self, n_folds=None):
         self.n_folds = n_folds or NN_ARCH.N_FOLDS
@@ -112,9 +113,71 @@ class NeuralRiskAssessor:
 
         return models
 
-    def prepare_features_for_nn(self, df):
-        """Подготовка признаков для нейросети с использованием статистических методов"""
+    def _get_growth_risk_factor(self, g: float) -> Tuple[int, str]:
+        """
+        Определение фактора риска на основе темпа роста g
 
+        Отрицательный рост - высокий риск
+        Низкий рост - средний риск
+        Умеренный рост - низкий риск
+        Высокий рост - очень низкий риск (но может быть нестабильным)
+        """
+        if pd.isna(g):
+            return RISK_SCORE.RISK_MEDIUM, "Не определен"
+
+        if g < 0:
+            return RISK_SCORE.RISK_HIGH, "Отрицательный рост (высокий риск)"
+        elif g < 5:
+            return RISK_SCORE.RISK_MEDIUM, "Низкий рост (средний риск)"
+        elif g < 10:
+            return RISK_SCORE.RISK_LOW, "Умеренный рост (низкий риск)"
+        elif g < 20:
+            return RISK_SCORE.RISK_VERY_LOW, "Хороший рост (очень низкий риск)"
+        else:
+            # Высокий рост может быть нестабильным
+            return (
+                RISK_SCORE.RISK_LOW,
+                "Высокий рост (низкий риск, но высокая волатильность)",
+            )
+
+    def _calculate_pe_risk(self, pe: float, g: float) -> int:
+        """
+        Оценка риска на основе P/E с учетом темпа роста
+        """
+        if pd.isna(pe) or pe <= 0:
+            return RISK_SCORE.RISK_MEDIUM
+
+        if pd.isna(g) or g <= 0:
+            # Если нет роста, используем стандартные пороги
+            if pe < 5:
+                return RISK_SCORE.RISK_VERY_LOW
+            elif pe < 10:
+                return RISK_SCORE.RISK_LOW
+            elif pe < 15:
+                return RISK_SCORE.RISK_MEDIUM
+            elif pe < 25:
+                return RISK_SCORE.RISK_HIGH
+            else:
+                return RISK_SCORE.RISK_HIGH
+
+        # Расчет PEG ratio с учетом роста
+        peg = pe / g if g > 0 else float("inf")
+
+        if peg < 0.5:
+            return RISK_SCORE.RISK_VERY_LOW
+        elif peg < 1:
+            return RISK_SCORE.RISK_LOW
+        elif peg < 1.5:
+            return RISK_SCORE.RISK_MEDIUM
+        elif peg < 2:
+            return RISK_SCORE.RISK_HIGH
+        else:
+            return RISK_SCORE.RISK_HIGH
+
+    def prepare_features_for_nn(self, df):
+        """Подготовка признаков для нейросети с учетом темпа роста g"""
+
+        # Основные признаки для оценки риска
         all_potential_features = [
             "P/E",
             "P/B",
@@ -134,12 +197,23 @@ class NeuralRiskAssessor:
             "EPS",
             "Beta",
             "Бета",
+            "g",  # Добавлен темп роста
         ]
 
         available_features = []
         feature_aliases = NN_FEATURE_ALIASES.FEATURE_ALIASES
 
+        # Проверяем наличие g в данных
+        if "g" in df.columns:
+            print(f"✅ Найден темп роста g в данных")
+            available_features.append("g")
+        else:
+            print(f"⚠️ Внимание: темп роста g не найден в данных")
+
         for standard_name in all_potential_features:
+            if standard_name == "g":
+                continue  # Уже обработали
+
             aliases = feature_aliases.get(standard_name, [standard_name])
             for alias in aliases:
                 if alias in df.columns:
@@ -148,9 +222,10 @@ class NeuralRiskAssessor:
 
         available_features = list(dict.fromkeys(available_features))
 
-        print(f"Используется {len(available_features)} признаков для нейросети:")
+        print(f"\n📊 Используется {len(available_features)} признаков для нейросети:")
         for i, feat in enumerate(available_features):
-            print(f"  {i+1}. {feat}")
+            importance = "★" if feat == "g" else "•"
+            print(f"  {importance} {feat}")
 
         X = []
         tickers = []
@@ -159,16 +234,26 @@ class NeuralRiskAssessor:
 
         for feature in available_features:
             values = []
-            aliases = feature_aliases.get(feature, [feature])
 
-            for alias in aliases:
-                if alias in df.columns:
-                    vals = df[alias].dropna()
+            if feature == "g":
+                # Прямое использование колонки g
+                if "g" in df.columns:
+                    vals = df["g"].dropna()
                     for v in vals:
                         try:
                             values.append(float(v))
                         except:
                             pass
+            else:
+                aliases = feature_aliases.get(feature, [feature])
+                for alias in aliases:
+                    if alias in df.columns:
+                        vals = df[alias].dropna()
+                        for v in vals:
+                            try:
+                                values.append(float(v))
+                            except:
+                                pass
 
             if values:
                 values = np.array(values)
@@ -204,15 +289,23 @@ class NeuralRiskAssessor:
 
             for feature in available_features:
                 value = None
-                aliases = feature_aliases.get(feature, [feature])
 
-                for alias in aliases:
-                    if alias in row and pd.notna(row[alias]):
+                if feature == "g":
+                    # Прямое получение g
+                    if "g" in row and pd.notna(row["g"]):
                         try:
-                            value = float(row[alias])
-                            break
+                            value = float(row["g"])
                         except:
                             pass
+                else:
+                    aliases = feature_aliases.get(feature, [feature])
+                    for alias in aliases:
+                        if alias in row and pd.notna(row[alias]):
+                            try:
+                                value = float(row[alias])
+                                break
+                            except:
+                                pass
 
                 if value is None:
                     value = feature_stats.get(feature, {}).get("median", 0)
@@ -230,14 +323,34 @@ class NeuralRiskAssessor:
             return None, None, None, None, None
 
         X = np.array(X)
-        print(f"✅ Подготовлено {len(X)} акций с {X.shape[1]} признаками")
+
+        # Статистика по g
+        if "g" in available_features:
+            g_idx = available_features.index("g")
+            g_values = X[:, g_idx]
+            g_valid = g_values[~np.isnan(g_values)]
+            if len(g_valid) > 0:
+                print(f"\n📈 Статистика темпа роста g:")
+                print(f"   Средний: {np.mean(g_valid):.2f}%")
+                print(f"   Медианный: {np.median(g_valid):.2f}%")
+                print(f"   Мин: {np.min(g_valid):.2f}%")
+                print(f"   Макс: {np.max(g_valid):.2f}%")
+                print(f"   Компаний с ростом > 0: {np.sum(g_valid > 0)}/{len(g_valid)}")
+
+        print(f"\n✅ Подготовлено {len(X)} акций с {X.shape[1]} признаками")
 
         return X, tickers, valid_indices, available_features, feature_stats
 
     @staticmethod
     def clip_extreme_values(feature: str, value: float) -> float:
         """Нормализация экстремальных значений"""
-        if feature in ["P/E", "P/B", "P/S", "EV/EBITDA"]:
+        if feature == "g":
+            # Темп роста: ограничиваем разумные значения
+            if value > NN_FEATURE.G_MAX:
+                return NN_FEATURE.G_MAX
+            elif value < NN_FEATURE.G_MIN:
+                return NN_FEATURE.G_MIN
+        elif feature in ["P/E", "P/B", "P/S", "EV/EBITDA"]:
             if value > NN_FEATURE.PE_MAX:
                 return NN_FEATURE.PE_MAX
             elif value < NN_FEATURE.PE_MIN:
@@ -254,9 +367,22 @@ class NeuralRiskAssessor:
                 return NN_FEATURE.DEBT_CAPITAL_MIN
         return value
 
-    @staticmethod
-    def get_risk_level_for_feature(feature: str, value: float, stats: Dict) -> int:
-        """Определение уровня риска для конкретного признака"""
+    def get_risk_level_for_feature(
+        self, feature: str, value: float, stats: Dict
+    ) -> int:
+        """Определение уровня риска для конкретного признака с учетом g"""
+
+        # Специальная обработка для g
+        if feature == "g":
+            risk_level, _ = self._get_growth_risk_factor(value)
+            return risk_level
+
+        # Специальная обработка для P/E с учетом g
+        if feature == "P/E" and "g" in self.feature_names:
+            # Здесь нужен доступ к g для этой компании
+            # Пока используем стандартную логику
+            pass
+
         median = stats.get("median", 0)
         q1 = stats.get("q1", 0)
         q3 = stats.get("q3", 0)
@@ -330,7 +456,9 @@ class NeuralRiskAssessor:
     @staticmethod
     def get_feature_weight(feature: str) -> float:
         """Получение веса для признака"""
-        if feature in RISK_SCORE.HIGH_IMPORTANCE_FEATURES:
+        if feature == "g":
+            return RISK_SCORE.WEIGHT_HIGH * 1.2  # Повышенный вес для темпа роста
+        elif feature in RISK_SCORE.HIGH_IMPORTANCE_FEATURES:
             return RISK_SCORE.WEIGHT_HIGH
         elif feature in RISK_SCORE.MEDIUM_IMPORTANCE_FEATURES:
             return RISK_SCORE.WEIGHT_MEDIUM
@@ -342,7 +470,7 @@ class NeuralRiskAssessor:
     def calculate_risk_categories_statistical(
         self, df, X, feature_names, feature_stats, use_ae_scores=True
     ):
-        """Рассчет категорий риска на основе статистических методов"""
+        """Рассчет категорий риска на основе статистических методов с учетом g"""
 
         y = []
         category_details = []
@@ -362,7 +490,18 @@ class NeuralRiskAssessor:
                     value = feature_vector[j]
                     stats = feature_stats.get(feature, {})
 
-                    risk_level = self.get_risk_level_for_feature(feature, value, stats)
+                    # Специальная обработка для P/E с учетом g
+                    if feature == "P/E" and "g" in feature_names:
+                        g_idx = feature_names.index("g")
+                        g_value = (
+                            feature_vector[g_idx] if g_idx < len(feature_vector) else 0
+                        )
+                        risk_level = self._calculate_pe_risk(value, g_value)
+                    else:
+                        risk_level = self.get_risk_level_for_feature(
+                            feature, value, stats
+                        )
+
                     weight = self.get_feature_weight(feature)
 
                     risk_factors.append(risk_level)
@@ -427,10 +566,11 @@ class NeuralRiskAssessor:
         return np.array(y_categories), category_details
 
     def train_risk_assessment_ensemble(self, df, use_ae_results=True):
-        """Обучение ансамбля нейросетей для оценки риска"""
+        """Обучение ансамбля нейросетей для оценки риска с учетом g"""
 
         print(NN_FORMAT.SEPARATOR)
         print("НАЧАЛО ОБУЧЕНИЯ НЕЙРОСЕТИ ДЛЯ ОЦЕНКИ РИСКА")
+        print("(с учетом темпа роста g)")
         print(NN_FORMAT.SEPARATOR)
 
         X, tickers, valid_indices, feature_names, feature_stats = (
@@ -632,6 +772,15 @@ class NeuralRiskAssessor:
             percentage = count / total_valid * 100 if total_valid > 0 else 0
             print(f"{category:<30}: {count:>3} акций ({percentage:.1f}%)")
 
+        # Добавляем информацию о g в результаты
+        if "g" in df.columns:
+            print("\n📈 Анализ риска по темпу роста:")
+            for category in all_categories:
+                cat_data = df[df["NN_Категория_текст"] == category]
+                if len(cat_data) > 0 and "g" in cat_data.columns:
+                    avg_g = cat_data["g"].mean()
+                    print(f"  {category:<20} средний g: {avg_g:.2f}%")
+
         print("\n" + NN_FORMAT.SEPARATOR)
         print("СТАТИСТИКА ПО УВЕРЕННОСТИ ПРЕДСКАЗАНИЙ")
         print(NN_FORMAT.SEPARATOR)
@@ -652,7 +801,7 @@ class NeuralRiskAssessor:
         return df, self.models, self.scaler
 
     def get_risk_recommendations_statistical(self, df):
-        """Получение персональных рекомендаций на основе статистической оценки риска"""
+        """Получение персональных рекомендаций на основе статистической оценки риска с учетом g"""
 
         recommendations = []
         recommendation_map = {
@@ -687,6 +836,7 @@ class NeuralRiskAssessor:
             risk_category = row.get("NN_Категория_текст", "")
             confidence = row.get("NN_Уверенность", 0)
             statistical_score = row.get("NN_Статистический_скор", 2)
+            growth_rate = row.get("g", np.nan)
 
             if pd.isna(risk_category) or risk_category == "":
                 continue
@@ -703,14 +853,22 @@ class NeuralRiskAssessor:
                     if not pd.isna(statistical_score)
                     else NN_FORMAT.NA_STRING
                 ),
+                "growth_rate": (
+                    f"{growth_rate:.2f}%" if not pd.isna(growth_rate) else "N/A"
+                ),
                 "action": rec_data["action"],
                 "allocation": rec_data["allocation"],
                 "monitoring": rec_data["monitoring"],
                 "confidence": confidence,
             }
 
-            if not pd.isna(statistical_score):
-                if statistical_score > NN_THRESHOLD.STAT_SCORE_HIGH:
+            # Добавляем специальные заметки на основе g
+            if not pd.isna(growth_rate):
+                if growth_rate < 0:
+                    recommendation["note"] = "⚠️ Отрицательный рост - повышенный риск"
+                elif growth_rate > 20:
+                    recommendation["note"] = "📈 Высокий рост - требует мониторинга"
+                elif statistical_score > NN_THRESHOLD.STAT_SCORE_HIGH:
                     recommendation["note"] = NN_REC.ANOMALY_NOTE
 
             recommendations.append(recommendation)
@@ -760,5 +918,19 @@ class NeuralRiskAssessor:
                 df.at[idx, "NN_Категория_текст"] = RISK_CAT.CATEGORY_MAP.get(
                     original_category, f"Категория {original_category}"
                 )
+
+        # Добавляем анализ PEG для предсказаний
+        if "g" in df.columns and "P/E" in df.columns:
+            df["PEG"] = np.where(
+                (df["g"] > 0) & (df["P/E"] > 0), df["P/E"] / df["g"], np.nan
+            )
+
+            print("\n📊 Анализ PEG по категориям риска:")
+            for cat in df["NN_Категория_текст"].unique():
+                if pd.notna(cat):
+                    cat_data = df[df["NN_Категория_текст"] == cat]
+                    if "PEG" in cat_data.columns:
+                        avg_peg = cat_data["PEG"].mean()
+                        print(f"  {cat}: средний PEG = {avg_peg:.2f}")
 
         return df, ensemble_predictions

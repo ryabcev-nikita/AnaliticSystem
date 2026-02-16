@@ -1,10 +1,9 @@
 """
 Константы для модуля нейросетевого анализа рисков и оптимизации портфеля.
-Все магические числа вынесены в именованные константы.
 """
 
 from dataclasses import dataclass
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple
 
 
 # ==================== КОНСТАНТЫ НЕЙРОСЕТИ ====================
@@ -209,13 +208,13 @@ class NNRiskPortfolioConstants:
     """Константы для оптимизации портфеля с нейросетевым риском"""
 
     # Базовые значения
-    BASE_RETURN: float = 0.10
-    BASE_VOLATILITY: float = 0.18
-    RISK_FREE_RATE: float = 0.08
+    BASE_RETURN: float = 0.155
+    BASE_VOLATILITY: float = 0.10
+    RISK_FREE_RATE: float = 0.155
 
     # Ограничения на веса
     MIN_WEIGHT: float = 0.01
-    MAX_WEIGHT: float = 0.20
+    MAX_WEIGHT: float = 0.15
 
     # Премии за категории риска
     RISK_A_PREMIUM: float = 0.02
@@ -238,7 +237,7 @@ class NNRiskPortfolioConstants:
     CONFIDENCE_SCALE: float = 0.8
 
     # Максимальная/минимальная доходность
-    MAX_RETURN: float = 0.35
+    MAX_RETURN: float = 0.50
     MIN_RETURN: float = 0.05
 
     # Базовая волатильность по категориям
@@ -278,8 +277,8 @@ class NNRiskPortfolioConstants:
 
     # Пороги для отбора кандидатов
     MIN_CONFIDENCE: float = 0.5
-    MIN_EXPECTED_RETURN: float = 0.08
-    MAX_VOLATILITY_THRESHOLD: float = 0.40
+    MIN_EXPECTED_RETURN: float = 0.155
+    MAX_VOLATILITY_THRESHOLD: float = 0.50
     MAX_CANDIDATES: int = 30
 
     # Веса для скора кандидатов
@@ -347,19 +346,19 @@ class NNFeatureAliases:
                 "P/E": self.PE_ALIASES,
                 "P/B": self.PB_ALIASES,
                 "P/S": self.PS_ALIASES,
-                "P/FCF": self.PFCF_ALIASES,
-                "EV/EBITDA": self.EV_EBITDA_ALIASES,
-                "EV/S": self.EV_S_ALIASES,
+                # "P/FCF": self.PFCF_ALIASES,
+                # "EV/EBITDA": self.EV_EBITDA_ALIASES,
+                # "EV/S": self.EV_S_ALIASES,
                 "ROE": self.ROE_ALIASES,
-                "ROA": self.ROA_ALIASES,
-                "ROIC": self.ROIC_ALIASES,
+                # "ROA": self.ROA_ALIASES,
+                # "ROIC": self.ROIC_ALIASES,
                 "NPM": self.NPM_ALIASES,
-                "EBITDA margin": self.EBITDA_MARGIN_ALIASES,
+                # "EBITDA margin": self.EBITDA_MARGIN_ALIASES,
                 "Debt/Capital": self.DEBT_CAPITAL_ALIASES,
-                "Debt/EBITDA": self.DEBT_EBITDA_ALIASES,
-                "Net Debt/EBITDA": self.NET_DEBT_EBITDA_ALIASES,
+                # "Debt/EBITDA": self.DEBT_EBITDA_ALIASES,
+                # "Net Debt/EBITDA": self.NET_DEBT_EBITDA_ALIASES,
                 "dividend_yield": self.DIV_YIELD_ALIASES,
-                "EPS": self.EPS_ALIASES,
+                # "EPS": self.EPS_ALIASES,
                 "Beta": self.BETA_ALIASES,
             },
         )
