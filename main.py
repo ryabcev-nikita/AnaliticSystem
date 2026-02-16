@@ -1,16 +1,8 @@
-from analysis.analysis_stocks.tree_solver_analysis.tree_solver_analysis import (
+from analysis import (
     create_full_model_tree_solver,
-)
-from analysis.analysis_stocks.ai_analysis.ai_anomaly_detector_ae.ai_anomaly_detector_ae import (
     create_model_ai_anomaly_detector_ae,
-)
-from analysis.analysis_stocks.ai_analysis.ai_risk_analysis.ai_risk_analysis import (
     create_model_ai_risk_analysis,
-)
-from analysis.analysis_stocks.cluster_analysis.cluster_analysis import (
     create_model_cluster_analysis,
-)
-from analysis.analysis_stocks.regression_analysis.regression_analysis import (
     create_model_regression_analysis,
 )
 from api.t_invest_api import get_full_data_t_api
@@ -18,12 +10,14 @@ from shared.config import ACTIONS_MAIN
 
 
 def do_full_analysis():
+    print("---------------------Анализ акций----------------------")
     get_full_data_t_api()
     create_model_regression_analysis()
     create_full_model_tree_solver()
     create_model_cluster_analysis()
     create_model_ai_risk_analysis()
     create_model_ai_anomaly_detector_ae()
+    print("-------------------------------------------------------")
 
 
 def main():
