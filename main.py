@@ -32,6 +32,8 @@ def main():
 
 def avaliable_actions():
     print("1. Сделать полный анализ")
+    print("2. Загрузить данные ")
+    print("")
     print("0. Выход")
 
 

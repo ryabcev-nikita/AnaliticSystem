@@ -78,7 +78,7 @@ def create_model_tree_solver():
     # Шаг 3: Обучение дерева решений
     print("\n🌳 Обучение модели дерева решений...")
     dt_model = DecisionTreeModel()
-    training_results = dt_model.train(df)
+    training_results = dt_model.train(df, save_plots=True)
 
     print(
         f"   Точность на обучающей выборке: {FORMATTING.PERCENT_FORMAT.format(training_results['train_accuracy'])}"

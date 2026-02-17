@@ -1,4 +1,6 @@
 # ==================== КЛАСС МОДЕЛИ ДЕРЕВА РЕШЕНИЙ ====================
+from datetime import datetime
+import os
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
@@ -12,6 +14,8 @@ from ...tree_solver_models.tree_solver_constants.tree_solver_constants import (
     MODEL_CONSTANTS,
     TARGET_MAPPING,
 )
+
+from ...tree_solver_models.tree_solver_loader.path_config import PATHS
 from ...tree_solver_models.tree_solver_market.market_analyzer import MarketAnalyzer
 
 
@@ -227,7 +231,12 @@ class DecisionTreeModel:
         return score
 
     def train(
-        self, df: pd.DataFrame, use_stratification: bool = True, verbose: bool = True
+        self,
+        df: pd.DataFrame,
+        use_stratification: bool = True,
+        verbose: bool = True,
+        save_plots: bool = True,
+        output_dir: str = PATHS["tree_solver_dir"],
     ):
         """
         Обучение дерева решений
@@ -240,9 +249,17 @@ class DecisionTreeModel:
             Использовать стратификацию по секторам
         verbose : bool
             Детальный вывод информации
+        save_plots : bool
+            Сохранять визуализации в PNG файлы
+        output_dir : str
+            Директория для сохранения результатов
         """
         if verbose:
             print("🌳 Обучение модели дерева решений...")
+
+        # Создание директории для сохранения результатов
+        run_dir = output_dir
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
         # Подготовка признаков
         df = self.prepare_features(df)
@@ -270,6 +287,46 @@ class DecisionTreeModel:
             for label, count in target_dist.items():
                 print(f"     • {label}: {count} ({count/len(df_model)*100:.1f}%)")
 
+        # Сохранение распределения классов
+        if save_plots:
+            import matplotlib.pyplot as plt
+            import seaborn as sns
+
+            fig, ax = plt.subplots(figsize=(10, 6))
+            target_counts = df_model["Оценка"].map(TARGET_MAPPING.LABELS).value_counts()
+            colors = ["#2ecc71", "#f1c40f", "#e74c3c"]
+            bars = ax.bar(
+                target_counts.index,
+                target_counts.values,
+                color=colors[: len(target_counts)],
+            )
+
+            ax.set_title(
+                "Распределение целевой переменной", fontsize=14, fontweight="bold"
+            )
+            ax.set_xlabel("Оценка компании", fontsize=12)
+            ax.set_ylabel("Количество компаний", fontsize=12)
+
+            # Добавление значений на столбцы
+            for bar, count in zip(bars, target_counts.values):
+                height = bar.get_height()
+                ax.text(
+                    bar.get_x() + bar.get_width() / 2.0,
+                    height,
+                    f"{count}\n({count/len(df_model)*100:.1f}%)",
+                    ha="center",
+                    va="bottom",
+                    fontsize=11,
+                )
+
+            plt.tight_layout()
+            plt.savefig(
+                os.path.join(run_dir, "class_distribution.png"),
+                dpi=300,
+                bbox_inches="tight",
+            )
+            plt.close()
+
         # Подготовка матрицы признаков
         X = df_model[self.feature_columns].copy()
         y = df_model["Оценка"]
@@ -283,6 +340,34 @@ class DecisionTreeModel:
                     print(
                         f"   • Заполнены пропуски в {col}: медиана = {median_val:.2f}"
                     )
+
+        # Визуализация распределения признаков
+        if save_plots:
+            fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+            axes = axes.flatten()
+
+            for i, col in enumerate(self.feature_columns):
+                if i < len(axes):
+                    for target_val in sorted(df_model["Оценка"].unique()):
+                        target_data = X[df_model["Оценка"] == target_val][col]
+                        target_label = TARGET_MAPPING.LABELS[target_val]
+                        axes[i].hist(
+                            target_data, alpha=0.7, label=target_label, bins=20
+                        )
+
+                    axes[i].set_title(f"Распределение {col} по классам", fontsize=12)
+                    axes[i].set_xlabel(col)
+                    axes[i].set_ylabel("Частота")
+                    axes[i].legend()
+                    axes[i].grid(True, alpha=0.3)
+
+            plt.tight_layout()
+            plt.savefig(
+                os.path.join(run_dir, "feature_distributions.png"),
+                dpi=300,
+                bbox_inches="tight",
+            )
+            plt.close()
 
         # Масштабирование признаков
         X_scaled = self.scaler.fit_transform(X)
@@ -308,8 +393,8 @@ class DecisionTreeModel:
             min_samples_split=MODEL_CONSTANTS.MIN_SAMPLES_SPLIT,
             min_samples_leaf=MODEL_CONSTANTS.MIN_SAMPLES_LEAF,
             random_state=MODEL_CONSTANTS.RANDOM_STATE,
-            class_weight="balanced",  # Учитываем дисбаланс классов
-            criterion="gini",  # Можно использовать 'entropy' для информационного выигрыша
+            class_weight="balanced",
+            criterion="gini",
         )
 
         self.model.fit(X_train, y_train)
@@ -335,6 +420,7 @@ class DecisionTreeModel:
 
         # Расчет матриц ошибок
         from sklearn.metrics import confusion_matrix, classification_report
+        import numpy as np
 
         results["train_confusion_matrix"] = confusion_matrix(y_train, train_pred)
         results["test_confusion_matrix"] = confusion_matrix(y_test, test_pred)
@@ -359,6 +445,177 @@ class DecisionTreeModel:
                 results["feature_importance"].items(), key=lambda x: x[1], reverse=True
             ):
                 print(f"     • {feat}: {imp:.2%}")
+
+        # Сохранение визуализаций
+        if save_plots:
+            # 1. Важность признаков
+            fig, ax = plt.subplots(figsize=(10, 6))
+            features = list(results["feature_importance"].keys())
+            importance = list(results["feature_importance"].values())
+
+            colors = plt.cm.YlOrRd(importance)
+            bars = ax.barh(features, importance, color=colors)
+            ax.set_xlabel("Важность признака", fontsize=12)
+            ax.set_title("Важность признаков в модели", fontsize=14, fontweight="bold")
+
+            # Добавление значений
+            for i, (bar, val) in enumerate(zip(bars, importance)):
+                ax.text(
+                    val + 0.01,
+                    bar.get_y() + bar.get_height() / 2,
+                    f"{val:.2%}",
+                    va="center",
+                    fontsize=11,
+                )
+
+            plt.tight_layout()
+            plt.savefig(
+                os.path.join(run_dir, "feature_importance.png"),
+                dpi=300,
+                bbox_inches="tight",
+            )
+            plt.close()
+
+            # 2. Матрица ошибок для тестовой выборки
+            fig, ax = plt.subplots(figsize=(8, 6))
+            cm = results["test_confusion_matrix"]
+            labels = [TARGET_MAPPING.LABELS[i] for i in sorted(self.model.classes_)]
+
+            sns.heatmap(
+                cm,
+                annot=True,
+                fmt="d",
+                cmap="Blues",
+                xticklabels=labels,
+                yticklabels=labels,
+                ax=ax,
+            )
+            ax.set_title(
+                "Матрица ошибок (тестовая выборка)", fontsize=14, fontweight="bold"
+            )
+            ax.set_ylabel("Фактическое значение", fontsize=12)
+            ax.set_xlabel("Предсказанное значение", fontsize=12)
+
+            plt.tight_layout()
+            plt.savefig(
+                os.path.join(run_dir, "confusion_matrix.png"),
+                dpi=300,
+                bbox_inches="tight",
+            )
+            plt.close()
+
+            # 3. Сравнение точности на train и test
+            fig, ax = plt.subplots(figsize=(8, 6))
+            metrics = ["Train", "Test"]
+            values = [results["train_accuracy"], results["test_accuracy"]]
+            colors = ["#3498db", "#2ecc71"]
+
+            bars = ax.bar(metrics, values, color=colors)
+            ax.set_ylim(0, 1)
+            ax.set_ylabel("Точность", fontsize=12)
+            ax.set_title("Сравнение точности модели", fontsize=14, fontweight="bold")
+
+            # Добавление значений
+            for bar, val in zip(bars, values):
+                height = bar.get_height()
+                ax.text(
+                    bar.get_x() + bar.get_width() / 2.0,
+                    height + 0.02,
+                    f"{val:.2%}",
+                    ha="center",
+                    va="bottom",
+                    fontsize=12,
+                )
+
+            # Добавление линии переобучения
+            if values[0] - values[1] > 0.1:
+                ax.axhline(y=values[1], color="red", linestyle="--", alpha=0.5)
+                ax.text(
+                    0.5,
+                    values[1] + 0.02,
+                    "Возможное переобучение",
+                    ha="center",
+                    color="red",
+                    fontweight="bold",
+                )
+
+            plt.tight_layout()
+            plt.savefig(
+                os.path.join(run_dir, "accuracy_comparison.png"),
+                dpi=300,
+                bbox_inches="tight",
+            )
+            plt.close()
+
+            # 4. Дерево решений (если не слишком глубокое)
+            if results["tree_depth"] <= 5:  # Визуализируем только неглубокие деревья
+                from sklearn.tree import plot_tree
+
+                fig, ax = plt.subplots(figsize=(20, 12))
+                plot_tree(
+                    self.model,
+                    feature_names=self.feature_columns,
+                    class_names=[
+                        TARGET_MAPPING.LABELS[i] for i in sorted(self.model.classes_)
+                    ],
+                    filled=True,
+                    rounded=True,
+                    fontsize=10,
+                    ax=ax,
+                )
+                ax.set_title("Структура дерева решений", fontsize=14, fontweight="bold")
+
+                plt.tight_layout()
+                plt.savefig(
+                    os.path.join(run_dir, "decision_tree.png"),
+                    dpi=300,
+                    bbox_inches="tight",
+                )
+                plt.close()
+
+            # Сохранение отчета в текстовый файл
+            with open(
+                os.path.join(run_dir, "training_report.txt"), "w", encoding="utf-8"
+            ) as f:
+                f.write("=" * 60 + "\n")
+                f.write("ОТЧЕТ ОБ ОБУЧЕНИИ МОДЕЛИ\n")
+                f.write("=" * 60 + "\n\n")
+
+                f.write(f"Дата и время: {timestamp}\n")
+                f.write(f"Количество компаний: {len(df_model)}\n")
+                f.write(f"Количество признаков: {results['n_features']}\n")
+                f.write(f"Количество классов: {results['n_classes']}\n\n")
+
+                f.write("РАСПРЕДЕЛЕНИЕ КЛАССОВ:\n")
+                f.write("-" * 40 + "\n")
+                for label, count in target_dist.items():
+                    f.write(f"{label}: {count} ({count/len(df_model)*100:.1f}%)\n")
+
+                f.write("\nМЕТРИКИ МОДЕЛИ:\n")
+                f.write("-" * 40 + "\n")
+                f.write(f"Точность на обучении: {results['train_accuracy']:.2%}\n")
+                f.write(f"Точность на тесте: {results['test_accuracy']:.2%}\n")
+                f.write(f"Глубина дерева: {results['tree_depth']}\n")
+                f.write(f"Количество листьев: {results['tree_leaves']}\n\n")
+
+                f.write("ВАЖНОСТЬ ПРИЗНАКОВ:\n")
+                f.write("-" * 40 + "\n")
+                for feat, imp in sorted(
+                    results["feature_importance"].items(),
+                    key=lambda x: x[1],
+                    reverse=True,
+                ):
+                    f.write(f"{feat}: {imp:.2%}\n")
+
+                f.write("\n" + "=" * 60 + "\n")
+
+            if verbose:
+                print(f"\n   💾 Все визуализации сохранены в директории:")
+                print(f"      {run_dir}")
+
+        # Добавление пути к сохраненным файлам в результаты
+        if save_plots:
+            results["output_dir"] = run_dir
 
         return results
 
