@@ -4,7 +4,7 @@ from analysis import (
     create_model_cluster_analysis,
     create_model_regression_analysis,
 )
-from api.t_invest_api import get_full_data_t_api
+from api.t_invest_api.t_invest_api import get_t_api_data
 from shared.config import ACTIONS_MAIN
 
 
@@ -17,6 +17,9 @@ def do_full_analysis():
     create_model_ai_risk_analysis()
     print("-------------------------------------------------------")
 
+def get_data():
+    get_t_api_data()  
+
 
 def main():
     while True:
@@ -25,7 +28,12 @@ def main():
 
         if action == ACTIONS_MAIN.get("FULL_ANALYSIS"):
             do_full_analysis()
+        elif action == ACTIONS_MAIN.get("DOWNLOAD_DATA"):
+            
         elif action == ACTIONS_MAIN.get("EXIT"):
+            print("Выход...")
+            return True
+        else:
             print("Выход...")
             return True
 
