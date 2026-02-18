@@ -11,7 +11,7 @@ class ClusterPathConfig:
 
     @staticmethod
     def setup_directories():
-        def find_root_dir(marker=".gitignore"):
+        def find_root_dir(marker="main.py"):
             current_dir = os.path.dirname(os.path.abspath(__file__))
             while True:
                 if os.path.exists(os.path.join(current_dir, marker)):

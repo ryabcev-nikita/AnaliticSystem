@@ -2,9 +2,10 @@
 Скрипт для загрузки данных из API Т-Банк Инвестиции
 """
 
-from constants.config import BONDS_EXCEL_PATH, SHARES_EXCEL_PATH
-from clients.bond_client import BondsClient
-from clients.share_client import SharesClient
+import time
+from .constants.config import BONDS_EXCEL_PATH, SHARES_EXCEL_PATH
+from .clients.bond_client import BondsClient
+from .clients.share_client import SharesClient
 
 
 def get_t_api_bonds_data():
@@ -71,6 +72,9 @@ def get_t_api_data():
         bonds_client.save_to_excel(bonds, BONDS_EXCEL_PATH)
         print(f"✅ Облигации сохранены в: {BONDS_EXCEL_PATH}")
 
+    print("Ограничение API, ждём 30 секунд...")
+    time.sleep(30)
+
     # === Акции ===
     print("\n\n📈 РАЗДЕЛ: АКЦИИ")
     print("-" * 40)
@@ -94,5 +98,4 @@ def get_t_api_data():
 
 
 if __name__ == "__main__":
-    # get_t_api_data()
-    get_t_api_shares_data()
+    get_t_api_data()

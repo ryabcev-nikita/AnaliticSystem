@@ -32,7 +32,7 @@ class NNRiskPortfolioVisualizer:
     ):
         """Сводная визуализация портфеля"""
         if filename is None:
-            filename = f"{NN_RISK_PATHS['nn_risk_portfolio_base']}_{portfolio_manager.name}.png"
+            filename = f"{NN_RISK_PATHS['ai_risk_portfolio_base']}_{portfolio_manager.name}.png"
 
         fig, axes = plt.subplots(2, 2, figsize=NN_FILES.FIGURE_SIZE_SUMMARY)
 
@@ -227,7 +227,7 @@ class NNRiskPortfolioVisualizer:
             return
 
         if filename is None:
-            filename = NN_RISK_PATHS["nn_risk_portfolio_comparison"]
+            filename = NN_RISK_PATHS["ai_risk_portfolio_comparison"]
 
         fig, axes = plt.subplots(2, 2, figsize=NN_FILES.FIGURE_SIZE_COMPARISON)
 
@@ -412,7 +412,7 @@ class NNRiskPortfolioVisualizer:
     ):
         """Построение границы эффективности"""
         if filename is None:
-            filename = NN_RISK_PATHS["nn_risk_efficient_frontier"]
+            filename = NN_RISK_PATHS["ai_risk_efficient_frontier"]
 
         expected_returns = df["NN_Expected_Return"].values
         cov_matrix = optimizer.create_covariance_matrix(df)

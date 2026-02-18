@@ -11,15 +11,15 @@ from t_tech.invest.schemas import (
 )
 from t_tech.invest.exceptions import RequestError
 
-from constants.config import (
+from ..constants.config import (
     TOKEN,
     BONDS_JSON_PATH,
     CHUNK_SIZE,
     DELAY_BETWEEN_CHUNKS,
     DELAY_BETWEEN_REQUESTS,
 )
-from models.bond import Bond
-from utils.utils import APIUtils, ExcelFormatter
+from ..models.bond import Bond
+from ..utils.utils import APIUtils, ExcelFormatter
 
 
 class BondsClient:

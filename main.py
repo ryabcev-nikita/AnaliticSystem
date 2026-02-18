@@ -10,15 +10,15 @@ from shared.config import ACTIONS_MAIN
 
 def do_full_analysis():
     print("---------------------Анализ акций----------------------")
-    # get_full_data_t_api()
-    # create_model_regression_analysis()
-    # create_full_model_tree_solver()
-    # create_model_cluster_analysis()
+    create_model_regression_analysis()
+    create_full_model_tree_solver()
+    create_model_cluster_analysis()
     create_model_ai_risk_analysis()
     print("-------------------------------------------------------")
 
+
 def get_data():
-    get_t_api_data()  
+    get_t_api_data()
 
 
 def main():
@@ -26,10 +26,18 @@ def main():
         avaliable_actions()
         action = int(input("Действие: "))
 
-        if action == ACTIONS_MAIN.get("FULL_ANALYSIS"):
+        if action == ACTIONS_MAIN.get("DOWNLOAD_DATA"):
+            get_data()
+        elif action == ACTIONS_MAIN.get("FULL_ANALYSIS"):
             do_full_analysis()
-        elif action == ACTIONS_MAIN.get("DOWNLOAD_DATA"):
-            
+        elif action == ACTIONS_MAIN.get("REGRESSION_ANALYSIS"):
+            create_model_regression_analysis()
+        elif action == ACTIONS_MAIN.get("CLUSTER_ANALYSIS"):
+            create_model_cluster_analysis()
+        elif action == ACTIONS_MAIN.get("TREE_SOLVER_ANALYSIS"):
+            create_full_model_tree_solver()
+        elif action == ACTIONS_MAIN.get("RISK_AI_ANALYSIS"):
+            create_model_ai_risk_analysis()
         elif action == ACTIONS_MAIN.get("EXIT"):
             print("Выход...")
             return True
@@ -39,9 +47,12 @@ def main():
 
 
 def avaliable_actions():
-    print("1. Сделать полный анализ")
-    print("2. Загрузить данные ")
-    print("")
+    print("1. Загрузить данные")
+    print("2. Сделать полный анализ российских акций")
+    print("3. Сделать регрессионый анализ акций")
+    print("4. Сделать кластерный анализ акций")
+    print("5. Сделать анализ акций с помощью дерева решений")
+    print("6. Сделать анализ рисков акций с помощью нейронной сети")
     print("0. Выход")
 
 

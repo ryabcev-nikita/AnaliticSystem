@@ -22,7 +22,7 @@ class PathConfig:
 
         """Создание необходимых директорий"""
         parent_dir = find_root_dir()
-        tree_solver_dir = f"{parent_dir}/data/tree_solver"
+        tree_solver_dir = f"{parent_dir}/data/tree_solver_analysis"
         os.makedirs(tree_solver_dir, exist_ok=True)
 
         return {

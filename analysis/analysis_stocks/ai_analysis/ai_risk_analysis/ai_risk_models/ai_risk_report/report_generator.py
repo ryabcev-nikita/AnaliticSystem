@@ -21,7 +21,7 @@ class NNRiskReportGenerator:
     ):
         """Генерация полного отчета"""
         if filename is None:
-            filename = NN_RISK_PATHS["nn_risk_portfolio_results"]
+            filename = NN_RISK_PATHS["ai_risk_portfolio_results"]
 
         with pd.ExcelWriter(filename, engine="openpyxl") as writer:
             df_with_risk.to_excel(

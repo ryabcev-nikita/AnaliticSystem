@@ -8,9 +8,9 @@ from t_tech.invest.schemas import (
     GetAssetFundamentalsRequest,
 )
 
-from models.share import FundamentalData, Share
-from utils.utils import APIUtils, ExcelFormatter
-from constants.config import (
+from ..models.share import FundamentalData, Share
+from ..utils.utils import APIUtils, ExcelFormatter
+from ..constants.config import (
     CHUNK_SIZE,
     DELAY_BETWEEN_REQUESTS,
     SHARES_JSON_PATH,

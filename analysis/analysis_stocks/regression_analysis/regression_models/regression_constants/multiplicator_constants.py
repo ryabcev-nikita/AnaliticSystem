@@ -20,7 +20,7 @@ def find_root_dir(marker="main.py"):
 ROOT_DIR = find_root_dir()
 
 DATA_DIR = os.path.join(ROOT_DIR, "data")
-RESULTS_DIR = os.path.join(DATA_DIR, "multiplicator_analysis")
+RESULTS_DIR = os.path.join(DATA_DIR, "regression_analysis")
 PATHS = {
     "input_file": DATA_DIR + "/fundamentals_shares.xlsx",
     "output_dir": RESULTS_DIR,

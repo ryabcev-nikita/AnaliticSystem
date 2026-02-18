@@ -6,7 +6,7 @@ from openpyxl.styles import Font, Alignment, PatternFill
 import openpyxl
 from t_tech.invest.schemas import Quotation
 
-from constants.config import MAX_RETRIES, RETRY_DELAY
+from ..constants.config import MAX_RETRIES, RETRY_DELAY
 
 
 class APIUtils:

@@ -126,7 +126,7 @@ def create_model_ai_risk_analysis():
 
     if portfolios:
         NNRiskPortfolioVisualizer.plot_portfolio_comparison(
-            portfolios, NN_RISK_PATHS["nn_risk_portfolio_comparison"]
+            portfolios, NN_RISK_PATHS["ai_risk_portfolio_comparison"]
         )
 
         best_portfolio = max(portfolios.values(), key=lambda p: p.metrics.sharpe_ratio)
@@ -136,13 +136,13 @@ def create_model_ai_risk_analysis():
             optimizer,
             candidates,
             portfolios,
-            NN_RISK_PATHS["nn_risk_efficient_frontier"],
+            NN_RISK_PATHS["ai_risk_efficient_frontier"],
         )
 
     print("\n📄 Сохранение результатов...")
 
     NNRiskReportGenerator.generate_full_report(
-        df_with_risk, candidates, portfolios, NN_RISK_PATHS["nn_risk_portfolio_results"]
+        df_with_risk, candidates, portfolios, NN_RISK_PATHS["ai_risk_portfolio_results"]
     )
 
     print("\n" + NN_FORMAT.SEPARATOR)
