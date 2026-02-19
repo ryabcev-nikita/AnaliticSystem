@@ -35,8 +35,8 @@ class MetalsDataLoader:
         prices = pd.DataFrame(data)
 
         # Фильтруем по датам
-        mask = (prices.index >= START_DATE) & (prices.index <= END_DATE)
-        prices = prices[mask]
+        # mask = (prices.index >= START_DATE) & (prices.index <= END_DATE)
+        # prices = prices[mask]
 
         # Удаляем строки с пропущенными значениями
         prices = prices.dropna()
