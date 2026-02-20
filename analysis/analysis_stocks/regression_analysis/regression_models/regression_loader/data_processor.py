@@ -6,7 +6,6 @@ import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 from ..regression_constants.multiplicator_constants import (
     DATA_PROCESSING,
     COLUMN_MAPPING,

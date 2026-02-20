@@ -58,7 +58,6 @@ setuptools==82.0.0
 six==1.17.0
 soupsieve==2.8.3
 statsmodels==0.14.6
-t-tech-investments==0.3.3
 tensorboard==2.20.0
 tensorboard-data-server==0.7.2
 tensorflow==2.20.0

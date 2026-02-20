@@ -1,0 +1,6 @@
+README.md
+setup.py
+AnalyticSystem.egg-info/PKG-INFO
+AnalyticSystem.egg-info/SOURCES.txt
+AnalyticSystem.egg-info/dependency_links.txt
+AnalyticSystem.egg-info/top_level.txt
